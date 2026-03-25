@@ -55,7 +55,7 @@ app.post('/api/upload', upload.single('file'), async (req: any, res: any) => {
         return res.status(400).json({ error: 'الملف فارغ أو لا يحتوي على بيانات يمكن تحليلها' });
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     const prompt = `
     
     **مهمتك:** أنت محلل بيانات متخصص. قُدمت لك البيانات التالية بصيغة JSON.
