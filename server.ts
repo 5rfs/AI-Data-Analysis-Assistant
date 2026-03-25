@@ -129,7 +129,7 @@ function setupRoutes() {
 
       // 4. الاتصال بـ Gemini API
       const apiKey = "AIzaSyA9aH1f2l5Qb6CSbgdO6cZKRltb_gjtgJQ";
-      if (!apiKey || apiKey === 'undefined' || apiKey === 'null' || apiKey.trim() === '') {
+      if (!apiKey || apiKey.trim() === '') {
         return res.status(500).json({ error: 'مفتاح MY_NEW_KEY غير متوفر أو غير صالح في بيئة الخادم. يرجى التحقق من إعدادات المفتاح.' });
       }
 
@@ -195,7 +195,7 @@ function setupRoutes() {
       const { message, history, dataSummary, analysisResult, language = 'ar' } = req.body;
 
       const apiKey = "AIzaSyA9aH1f2l5Qb6CSbgdO6cZKRltb_gjtgJQ";
-      if (!apiKey || apiKey === 'undefined' || apiKey === 'null' || apiKey.trim() === '') {
+      if (!apiKey || apiKey.trim() === '') {
         return res.status(500).json({ error: 'مفتاح MY_NEW_KEY غير متوفر أو غير صالح في بيئة الخادم. يرجى التحقق من إعدادات المفتاح.' });
       }
 
@@ -258,7 +258,7 @@ function setupRoutes() {
       }
 
       const apiKey = "AIzaSyA9aH1f2l5Qb6CSbgdO6cZKRltb_gjtgJQ";
-      if (!apiKey || apiKey === 'undefined' || apiKey === 'null' || apiKey.trim() === '') {
+      if (!apiKey || apiKey.trim() === '') {
         return res.status(500).json({ error: 'مفتاح MY_NEW_KEY غير متوفر أو غير صالح في بيئة الخادم. يرجى التحقق من إعدادات المفتاح.' });
       }
 
