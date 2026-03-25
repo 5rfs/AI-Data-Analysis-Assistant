@@ -33,7 +33,7 @@
   "devDependencies": {
     "@types/express": "^4.17.25",
     "@types/multer": "^2.1.0",
-    "@types/node": "^22.14.0",
+    "@types/node": "^22.19.15",
     "@types/papaparse": "^5.5.2",
     "autoprefixer": "^10.4.21",
     "tailwindcss": "^4.1.14",
