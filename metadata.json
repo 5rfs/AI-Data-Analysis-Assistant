@@ -1,0 +1,5 @@
+{
+  "name": "AI Data Analysis Assistant",
+  "description": "An interactive AI-powered web application for data analysis, featuring file upload, automated insights, data storytelling, and code generation.",
+  "requestFramePermissions": []
+}
