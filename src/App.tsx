@@ -481,15 +481,35 @@ export default function App() {
       }
 
       const resultText = await response.text();
-      let result: AnalysisResult;
+      let resultData: AnalysisResult;
+
       try {
-        result = JSON.parse(resultText);
+        const parsedResponse = JSON.parse(resultText);
+        
+        // The server sends back an object with a 'data' property containing the AI's markdown string.
+        // The UI expects a structured `AnalysisResult` object.
+        // To bridge this and prevent a crash, we will create a valid `AnalysisResult` object.
+        // We will place the entire markdown response into the `data_story` field.
+        // We will provide an empty array for `charts` to prevent the `.map()` error.
+        resultData = {
+          data_story: parsedResponse.data || "No analysis data returned.",
+          cleaning_summary: parsedResponse.cleaning_summary || "", // Provide a safe default
+          charts: Array.isArray(parsedResponse.charts) ? parsedResponse.charts : [], // This prevents the crash
+          dataSummary: parsedResponse.dataSummary, // Pass this through if it exists
+          cleaned_excel_base64: parsedResponse.cleaned_excel_base64 // Pass this through
+        };
       } catch (e) {
-        console.error('Failed to parse success response as JSON:', resultText.substring(0, 200));
-        throw new Error('استجاب الخادم ببيانات غير صالحة');
+        console.error('Failed to parse API response as JSON:', resultText.substring(0, 500));
+        // If the response is not JSON, it might be a plain error string from the server or proxy.
+        // We'll display it as the main story and ensure other fields are safe.
+        resultData = {
+          data_story: "### Server Response\n\nThe server returned an unexpected response that could not be displayed as a structured analysis. Here is the raw output:\n\n```\n" + resultText + "\n```",
+          cleaning_summary: "",
+          charts: [],
+        };
       }
       
-      setAnalysisResult(result);
+      setAnalysisResult(resultData);
       
       setIsProcessing(false);
       setAnalysisComplete(true);
@@ -795,7 +815,7 @@ export default function App() {
                       <h3 className="text-lg font-bold text-slate-100">{translations[language].chartSuggestions}</h3>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                      {analysisResult.charts.map((chart, idx) => (
+                      {analysisResult.charts?.map((chart, idx) => (
                         <div key={idx} className="p-4 bg-slate-800/50 border border-slate-700 rounded-xl text-center hover:border-blue-500/50 transition-colors flex flex-col items-center justify-center">
                           {getChartIcon(chart.type, "w-8 h-8 text-blue-400 mx-auto mb-1")}
                           <span className="text-[10px] text-amber-400 uppercase tracking-widest mb-3 font-mono">{getChartEnglishName(chart.type)}</span>
